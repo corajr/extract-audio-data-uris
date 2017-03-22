@@ -5,8 +5,10 @@ module Text.HTML.AudioDataURIs where
 import qualified Data.ByteString.Lazy.Char8 as BL
 import Data.ByteString.Lazy.Char8 (ByteString)
 import qualified Data.Text.Lazy as T
+import qualified Data.Text.Lazy.IO as TIO
 import Data.Text.Lazy (Text(..))
 import System.FilePath (joinPath)
+import System.Environment (getArgs)
 import Data.ByteString.Base64.Lazy (decodeLenient)
 
 import Data.Data (Data)
@@ -63,4 +65,9 @@ writeToFiles outDir = mapM_ f
   where f (fname, value) = BL.writeFile (joinPath [outDir, fname]) value
 
 cliMain :: IO ()
-cliMain = return ()
+cliMain = do
+  [uri, outDir] <- getArgs
+  inputHTML <- TIO.getContents
+  let (newHTML, results) = convert uri inputHTML
+  writeToFiles outDir results
+  TIO.putStr newHTML
