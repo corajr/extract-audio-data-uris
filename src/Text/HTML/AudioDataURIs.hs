@@ -15,9 +15,6 @@ import System.FilePath (joinPath)
 import System.Environment (getArgs)
 import Data.ByteString.Base64 (decodeLenient)
 
-import Debug.Trace (traceShowId)
-import Data.Data (Data)
-
 import Text.HTML.TagSoup
 
 import Data.List (stripPrefix)

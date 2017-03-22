@@ -4,8 +4,8 @@ module Text.HTML.AudioDataURIsSpec (main, spec) where
 import Test.Hspec
 import Test.QuickCheck
 
-import qualified Data.ByteString.Lazy as BL
-import qualified Data.Text.Lazy as T
+import qualified Data.ByteString as BS
+import qualified Data.Text as T
 import Text.HTML.AudioDataURIs
 
 import System.FilePath (joinPath)
@@ -34,15 +34,15 @@ exampleConvertedHTML = T.unlines
 dataUri :: T.Text
 dataUri = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAIlYAAESsAAACABAAZGF0YQQAAAAAAP9/"
 
-exampleWave :: BL.ByteString
+exampleWave :: BS.ByteString
 exampleWave = "RIFF(\NUL\NUL\NULWAVEfmt \DLE\NUL\NUL\NUL\SOH\NUL\SOH\NUL\"V\NUL\NULD\172\NUL\NUL\STX\NUL\DLE\NULdata\EOT\NUL\NUL\NUL\NUL\NUL\255\DEL"
 
-writeToTemp :: [(FilePath, BL.ByteString)] -> IO [(FilePath, BL.ByteString)]
+writeToTemp :: [(FilePath, BS.ByteString)] -> IO [(FilePath, BS.ByteString)]
 writeToTemp inp =
   withSystemTempDirectory "out_files" $ \dirname -> do
     writeToFiles dirname inp
     written <- listDirectory dirname
-    mapM (\x -> (,) <$> pure x <*> BL.readFile (joinPath [dirname, x])) written
+    mapM (\x -> (,) <$> pure x <*> BS.readFile (joinPath [dirname, x])) written
 
 main :: IO ()
 main = hspec spec
