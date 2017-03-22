@@ -13,7 +13,5 @@ an HTML file named `out.html`, a directory called `_site` with a subpath
 hosted at the root:
 
 ```sh
-cat out.html | stack exec extract-audio-data-uris /static/notebooks/datestamp/ _site/static/notebooks/datestamp/
+cat out.html | stack exec extract-audio-data-uris /static/notebooks/datestamp _site/static/notebooks/datestamp/ > datestamp.html
 ```
-
-Note that the URI prefix must have a `/` at the end.
