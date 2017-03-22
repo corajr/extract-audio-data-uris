@@ -5,8 +5,8 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 module Text.HTML.AudioDataURIs where
 
-import qualified Data.ByteString.Lazy.Char8 as BL
-import Data.ByteString.Lazy.Char8 (ByteString)
+import qualified Data.ByteString.Lazy as BS
+import Data.ByteString.Lazy (ByteString)
 import qualified Data.Text.Lazy as T
 import qualified Data.Text.Lazy.Encoding as E
 import qualified Data.Text.Lazy.IO as TIO
@@ -69,7 +69,7 @@ parseDataURI xs =
 -- | Utility function to write the list of filenames/file data into a directory.
 writeToFiles :: FilePath -> [(FilePath, ByteString)] -> IO ()
 writeToFiles outDir = mapM_ f
-  where f (fname, value) = BL.writeFile (joinPath [outDir, fname]) value
+  where f (fname, value) = BS.writeFile (joinPath [outDir, fname]) value
 
 -- | Main entry point: pass URI prefix and outdir as args, input HTML to STDIN.
 cliMain :: IO ()
