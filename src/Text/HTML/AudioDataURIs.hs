@@ -5,21 +5,20 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 module Text.HTML.AudioDataURIs where
 
-import qualified Data.ByteString.Lazy as BS
-import Data.ByteString.Lazy (ByteString)
-import qualified Data.Text.Lazy as T
-import qualified Data.Text.Lazy.Encoding as E
-import qualified Data.Text.Lazy.IO as TIO
-import Data.Text.Lazy (Text(..))
+import qualified Data.ByteString as BS
+import Data.ByteString (ByteString)
+import qualified Data.Text as T
+import qualified Data.Text.Encoding as E
+import qualified Data.Text.IO as TIO
+import Data.Text (Text(..))
 import System.FilePath (joinPath)
 import System.Environment (getArgs)
-import Data.ByteString.Base64.Lazy (decodeLenient)
+import Data.ByteString.Base64 (decodeLenient)
 
 import Debug.Trace (traceShowId)
 import Data.Data (Data)
 
 import Text.HTML.TagSoup
-import Text.StringLike
 
 import Data.List (stripPrefix)
 
@@ -56,7 +55,7 @@ extractAudioURIs uri x =
       n <- gets length
       let fname = "out" ++ show n ++ ".wav"
       modify (\xs -> (fname, parseDataURI dataUri) : xs)
-      return ("src", fromString $ uri ++ fname)
+      return ("src", T.pack $ uri ++ fname)
     g x = return x
 
 -- | Turn a WAV data URI into a ByteString or fail.
