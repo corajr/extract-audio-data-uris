@@ -18,6 +18,7 @@ exampleHTML = T.unlines
   , " <source src=\"data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAIlYAAESsAAACABAAZGF0YQQAAAAAAP9/\" type=\"audio/wav\" />"
   , "   Your browser does not support the audio element."
   , "</audio>"
+  , "<div><!-- MORE --></div>"
   ]
 
 exampleConvertedHTML :: T.Text
@@ -26,6 +27,7 @@ exampleConvertedHTML = T.unlines
   , " <source src=\"/static/out/out0.wav\" type=\"audio/wav\"></source>"
   , "   Your browser does not support the audio element."
   , "</audio>"
+  , "<div><!-- MORE --></div>"
   ]
 
 
@@ -49,7 +51,7 @@ spec :: Spec
 spec = do
   describe "convert" $ do
     context "when given a uri prefix (ending in /) and an HTML string" $ do
-      it "returns a new HTML string and a list of (FilePath, ByteString) tuples" $ do
+      it "returns a new HTML string (preserving comments) and a list of (FilePath, ByteString) tuples" $ do
         convert "/static/out/" exampleHTML `shouldBe` (exampleConvertedHTML, [("out0.wav", exampleWave)])
   describe "parseDataURI" $ do
     it "takes a base64-encoded Text as input and gives back a ByteString" $ do
