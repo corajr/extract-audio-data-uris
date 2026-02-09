@@ -3,6 +3,7 @@
 #####=== Haskell ===#####
 
 dist
+dist-newstyle/
 cabal-dev
 *.o
 *.hi
